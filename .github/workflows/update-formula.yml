@@ -1,0 +1,57 @@
+name: Update Formula on clean-dev-dirs Release
+
+on:
+  repository_dispatch:
+    types: [clean-dev-dirs-release]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout tap repository
+        uses: actions/checkout@v4
+
+      - name: Ensure checksum script is executable
+        run: |
+          chmod +x ./get-checksum.sh
+
+      - name: Compute sha256 from tarball
+        id: sha
+        run: |
+          TAR_URL='${{ github.event.client_payload.tarball_url }}'
+          echo "Tarball: ${TAR_URL}"
+          SHA=$(bash ./get-checksum.sh "${TAR_URL}")
+          echo "sha256=${SHA}" >> "$GITHUB_OUTPUT"
+
+      - name: Update Formula/clean-dev-dirs.rb
+        run: |
+          TAG='${{ github.event.client_payload.tag }}'
+          VERSION="${TAG#v}"
+          SHA='${{ steps.sha.outputs.sha256 }}'
+          FORMULA='Formula/clean-dev-dirs.rb'
+
+          # Update the url line
+          sed -i.bak "s|^  url \".*\"|  url \"https://github.com/clean-dev-dirs/clean-dev-dirs/archive/refs/tags/${TAG}.tar.gz\"|" "$FORMULA"
+          # Update the sha256 line
+          sed -i.bak "s|^  sha256 \".*\"|  sha256 \"${SHA}\"|" "$FORMULA"
+          # Update the version line
+          sed -i.bak "s|^  version \".*\"|  version \"${VERSION}\"|" "$FORMULA"
+          # Update the test assertion line
+          sed -i.bak "s|assert_match \"clean-dev-dirs [^\"]*\"|assert_match \"clean-dev-dirs ${VERSION}\"|" "$FORMULA"
+          rm -f "${FORMULA}.bak"
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          commit-message: "clean-dev-dirs: bump to ${{ github.event.client_payload.tag }}"
+          branch: bump/clean-dev-dirs-${{ github.event.client_payload.tag }}
+          title: "clean-dev-dirs: bump to ${{ github.event.client_payload.tag }}"
+          body: |
+            Bump `Formula/clean-dev-dirs.rb` to `${{ github.event.client_payload.tag }}`.
+            - Update `url` to the new tag tarball
+            - Update `sha256` to the tarball checksum
+            - Update `version` and test assertion
