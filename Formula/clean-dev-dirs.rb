@@ -2,7 +2,7 @@ class CleanDevDirs < Formula
   desc "A fast CLI tool for recursively cleaning development build directories to reclaim disk space"
   homepage "https://github.com/clean-dev-dirs/clean-dev-dirs"
   url "https://github.com/clean-dev-dirs/clean-dev-dirs/archive/refs/tags/v2.5.0.tar.gz"
-  sha256 "PLACEHOLDER_SHA256"
+  sha256 "73975f6ea02b57ac8e63e504a7dfc603b50eaddc6f8c03ca288c308d1715911f"
   license "Apache-2.0 OR MIT"
   version "2.5.0"
 
