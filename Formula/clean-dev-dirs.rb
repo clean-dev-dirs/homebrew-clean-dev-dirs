@@ -6,6 +6,13 @@ class CleanDevDirs < Formula
   license "Apache-2.0 OR MIT"
   version "2.5.0"
 
+  bottle do
+    root_url "https://github.com/clean-dev-dirs/clean-dev-dirs/releases/download/v2.5.0"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "PLACEHOLDER_ARM64_SEQUOIA"
+    sha256 cellar: :any_skip_relocation, sequoia:       "PLACEHOLDER_SEQUOIA"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "PLACEHOLDER_X86_64_LINUX"
+  end
+
   depends_on "rust" => :build
 
   def install

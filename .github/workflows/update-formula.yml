@@ -31,16 +31,25 @@ jobs:
           TAG='${{ github.event.client_payload.tag }}'
           VERSION="${TAG#v}"
           SHA='${{ steps.sha.outputs.sha256 }}'
+          SHA_ARM64='${{ github.event.client_payload.sha256_arm64_sequoia }}'
+          SHA_SEQUOIA='${{ github.event.client_payload.sha256_sequoia }}'
+          SHA_LINUX='${{ github.event.client_payload.sha256_x86_64_linux }}'
           FORMULA='Formula/clean-dev-dirs.rb'
 
           # Update the url line
           sed -i.bak "s|^  url \".*\"|  url \"https://github.com/clean-dev-dirs/clean-dev-dirs/archive/refs/tags/${TAG}.tar.gz\"|" "$FORMULA"
-          # Update the sha256 line
+          # Update the source sha256 line (top-level, not inside bottle block)
           sed -i.bak "s|^  sha256 \".*\"|  sha256 \"${SHA}\"|" "$FORMULA"
           # Update the version line
           sed -i.bak "s|^  version \".*\"|  version \"${VERSION}\"|" "$FORMULA"
           # Update the test assertion line
           sed -i.bak "s|assert_match \"clean-dev-dirs [^\"]*\"|assert_match \"clean-dev-dirs ${VERSION}\"|" "$FORMULA"
+          # Update bottle root_url
+          sed -i.bak "s|root_url \"https://.*\"|root_url \"https://github.com/clean-dev-dirs/clean-dev-dirs/releases/download/${TAG}\"|" "$FORMULA"
+          # Update bottle SHA256s
+          sed -i.bak "/arm64_sequoia:/s/\"[^\"]*\"/\"${SHA_ARM64}\"/" "$FORMULA"
+          sed -i.bak "/, sequoia:/s/\"[^\"]*\"/\"${SHA_SEQUOIA}\"/" "$FORMULA"
+          sed -i.bak "/x86_64_linux:/s/\"[^\"]*\"/\"${SHA_LINUX}\"/" "$FORMULA"
           rm -f "${FORMULA}.bak"
 
       - name: Create pull request
