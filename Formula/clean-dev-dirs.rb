@@ -1,16 +1,16 @@
 class CleanDevDirs < Formula
   desc "A fast CLI tool for recursively cleaning development build directories to reclaim disk space"
   homepage "https://github.com/clean-dev-dirs/clean-dev-dirs"
-  url "https://github.com/clean-dev-dirs/clean-dev-dirs/archive/refs/tags/v2.5.3.tar.gz"
-  sha256 "2653466984791e5fe66e5601a8856bc3b57641bb5ef2521ab019457eaf48c380"
+  url "https://github.com/clean-dev-dirs/clean-dev-dirs/archive/refs/tags/v2.5.4.tar.gz"
+  sha256 "d719573e63f21e1349b23872ff8d179b7a65dfc0f8e66e626b42e85b3f60969a"
   license "Apache-2.0 OR MIT"
-  version "2.5.3"
+  version "2.5.4"
 
   bottle do
     root_url "https://tomplanche.com/api/brew/track/clean-dev-dirs"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8429ebd4077a5a91fdf06a6801fe0a7e27aaec3fd9ddb378bcf647d04beff422"
-    sha256 cellar: :any_skip_relocation, sequoia:       "d070a186ed58ef346ed4d02931d1564f11e67aa071b19a3329a3be30a0655215"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fd0806f768cc11acc965a7de241e3dc2a7744dacbc174fd0170a9b1e843a7a07"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "27893883c18328938ae35656e5e67f1315c096b63d9f87fcc959c98b461b8cc7"
+    sha256 cellar: :any_skip_relocation, sequoia:       "4e90242f02b1e9d75612730812f4498ba8376d6646b6dad35a00705216a722a2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "26651277c66999e9ae530f9da38c088d4951ecddecd458af3a9670ca6c80018f"
   end
 
   depends_on "rust" => :build
@@ -20,6 +20,6 @@ class CleanDevDirs < Formula
   end
 
   test do
-    assert_match "clean-dev-dirs 2.5.3", shell_output("#{bin}/clean-dev-dirs --version")
+    assert_match "clean-dev-dirs 2.5.4", shell_output("#{bin}/clean-dev-dirs --version")
   end
 end
