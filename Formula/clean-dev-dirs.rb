@@ -7,7 +7,7 @@ class CleanDevDirs < Formula
   version "2.9.1"
 
   bottle do
-    root_url "https://tomplanche.com/api/brew/track/clean-dev-dirs"
+    root_url "https://git.tomplanche.com/clean-dev-dirs/clean-dev-dirs/releases/download/v2.9.1"
     sha256 cellar: :any_skip_relocation, arm64_sequoia: "694ff5d11722e87a0597aca28227e7847656bafe85b1fb9df3ef92782f3abb1d"
     sha256 cellar: :any_skip_relocation, sequoia:       "29a78a3f0ec9933abca3004cb64f2b98b3c54a9dbadd5732b5baae08b586246e"
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "305e01dd2ad4976afe3da22f51fd04181c3e0e8063311e1348ecbf74196fcc75"
