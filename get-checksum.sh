@@ -12,7 +12,7 @@ if [[ "$INPUT" =~ ^https?:// ]]; then
 else
     # Interactive mode: argument is a version
     VERSION="$INPUT"
-    URL="https://github.com/clean-dev-dirs/clean-dev-dirs/archive/refs/tags/v${VERSION}.tar.gz"
+    URL="https://git.tomplanche.com/clean-dev-dirs/clean-dev-dirs/releases/download/v${VERSION}/clean-dev-dirs-${VERSION}.tar.gz"
     QUIET=false
 fi
 
@@ -27,7 +27,7 @@ SHA256=$(curl -sL "${URL}" | shasum -a 256 | awk '{print $1}')
 
 if [ -z "$SHA256" ]; then
     echo "Error: Failed to calculate checksum. Please check:" >&2
-    echo "1. The GitHub release exists" >&2
+    echo "1. The Forgejo release exists" >&2
     echo "2. You have internet connection" >&2
     echo "3. The URL is correct" >&2
     exit 1

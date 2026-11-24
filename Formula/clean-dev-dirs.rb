@@ -1,6 +1,6 @@
 class CleanDevDirs < Formula
   desc "A fast CLI tool for recursively cleaning development build directories to reclaim disk space"
-  homepage "https://github.com/clean-dev-dirs/clean-dev-dirs"
+  homepage "https://git.tomplanche.com/clean-dev-dirs/clean-dev-dirs"
   url "https://github.com/clean-dev-dirs/clean-dev-dirs/archive/refs/tags/v2.9.1.tar.gz"
   sha256 "fd16d654938a14bbd725f55c7a8808ffb71c904ccee7e5d23fe6b54f34299410"
   license "Apache-2.0 OR MIT"
